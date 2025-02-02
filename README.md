@@ -3,7 +3,9 @@ A 3D first person game with movement/physics mechanics.
 
 ### TODO:
 -create level
+
 -add weapons
+
 -add enemies
 
 ### Changelog 
