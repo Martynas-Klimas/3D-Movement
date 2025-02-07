@@ -6,11 +6,16 @@ A 3D first person game with movement/physics mechanics.
 
 -add weapons:
 
-(Reloading, weapon switching, animations).
+- Reloading + animation + particle effects done for pistol, now the same for gun.
+- Create a primary weapon class and override the methods in pistol and rifle objects.
 
 -add enemies
 
 ### Changelog 
+2025-02-06
+
+Added pistol reload animation and muzzle flash, impact vfx.
+
 2025-02-05
 
 Added basic shooting, gun models.
