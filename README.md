@@ -2,15 +2,23 @@
 A 3D first person game with movement/physics mechanics.
 
 ### TODO:
--create level
+- Create level
+ 
+- Add weapons (basics done):
+- so far added pistol and rifle. Maybe search for a better muzzle flash later. Now weapon switch. (done)
 
--add weapons:
+- Add enemies:
+- NavMesh, different states - patrolling, attacking, idle. Enemy vision, shooting, vfx.
 
--so far added pistol and rifle. Maybe search for a better muzzle flash later. Now weapon switch and enemies.
 
--add enemies
+- create a main game idea and decide on the theme to prevent feature creep and artstyle inconsistencies. (so far its supposed to be a shooter with hookshot movement mechanics).
+- create sound design
 
 ### Changelog 
+2025-02-08
+
+Weapon switch now works properly. 
+
 2025-02-07
 
 Added rifle reload, muzzle flash vfx. Created a primary abstract gun class and two child classes - pistol and rifle for different shooting mechanics.
