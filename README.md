@@ -16,7 +16,7 @@ A 3D first person game with movement/physics mechanics.
 ### Changelog 
 2025-02-09
 
-Added basic enemy movement, different states. So far enemy movement is just 
+Added basic enemy movement, different states. So far enemy chasing is just checking when player is in range.
 
 2025-02-08
 
