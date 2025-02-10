@@ -15,6 +15,10 @@ A 3D first person game with movement/physics mechanics.
 - create sound design
 
 ### Changelog 
+2025-02-09
+
+Added basic enemy movement, navigation scripts. 
+
 2025-02-08
 
 Weapon switch now works properly. 
