@@ -14,6 +14,10 @@ A 3D first person game with movement/physics mechanics.
 - create sound design
 
 ### Changelog 
+2025-02-15
+
+Fixed enemy movement, started adding projectile attacks.
+
 2025-02-09
 
 Added basic enemy movement, different states. So far enemy chasing is just checking when player is in range.
