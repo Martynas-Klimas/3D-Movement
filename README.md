@@ -8,13 +8,20 @@ A 3D first person game with movement/physics mechanics.
 - so far added pistol and rifle. Maybe search for a better muzzle flash later. Now weapon switch. (done)
 
 - Add enemies:
-- NavMesh, different states - patrolling, attacking, idle. Enemy vision, shooting, vfx.
-
+- Enemy roaming done, vision so far is just checksphere (raycasts in the future maybe). Now implement ranged enemy and its attack.
 
 - create a main game idea and decide on the theme to prevent feature creep and artstyle inconsistencies. (so far its supposed to be a shooter with hookshot movement mechanics).
 - create sound design
 
 ### Changelog 
+2025-02-15
+
+Fixed enemy movement, started adding projectile attacks.
+
+2025-02-09
+
+Added basic enemy movement, different states. So far enemy chasing is just checking when player is in range.
+
 2025-02-08
 
 Weapon switch now works properly. 
