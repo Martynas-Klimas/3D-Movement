@@ -6,13 +6,12 @@ public class Enemy : MonoBehaviour
     [Header("General stats")]
     [SerializeField] protected float health = 100f;
     [SerializeField] protected float damage = 20f;
-    [SerializeField] protected float attackRange = 3f;
+    [SerializeField] protected float attackDistance = 5f;
     [SerializeField] protected float attackCooldown = 1f;
 
     [Header("Distances")]
     [SerializeField] protected float chaseDistance = 15f;
     [SerializeField] protected float stopChaseDistance = 30f;
-    [SerializeField] protected float attackDistance = 5f;
     [SerializeField] protected float randomMoveDistance = 5f;
 
     [Header("Public components")]
@@ -55,7 +54,6 @@ public class Enemy : MonoBehaviour
 
     protected void Update()
     {
-        ResetAttackCoolDown();
         switch (state)
         {
             default:
@@ -85,7 +83,7 @@ public class Enemy : MonoBehaviour
         if (movePointSet)
         {   
             agent.SetDestination(movePointPosition);
-
+            
             if (Vector3.Distance(transform.position, movePointPosition) < reachedPositionDistance)
             {
                 movePointSet = false;
@@ -102,9 +100,12 @@ public class Enemy : MonoBehaviour
     protected virtual void EnemyChase()
     {
         // chase the player to engage
-        Debug.Log("Chasing");
+        hasAttacked = false;
+        Debug.Log($"Chasing player: {player.position}, NavMeshAgent Destination: {agent.destination}");
         transform.LookAt(player.position);
+        agent.stoppingDistance = attackDistance - 0.5f;
         agent.SetDestination(player.position);
+
         if (Physics.CheckSphere(transform.position, attackDistance, whatIsPlayer)) 
         {
             state = State.Attacking;
@@ -115,28 +116,35 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    protected virtual void EnemyAttack() //melee enemy hits player, ranged shoots projectiles
+    protected virtual void EnemyAttack()
     {
-        if (!hasAttacked && attackCooldown <= 0f)
+        if (!hasAttacked && remainingAttackCooldown <= 0f)
         {
             if (Physics.CheckSphere(transform.position, attackDistance, whatIsPlayer))
             {
                 Debug.Log("Attacking");
-                //different attack actions for different enemies
+
+                // Different attack actions for different enemies (e.g., damage player)
                 remainingAttackCooldown = attackCooldown;
                 hasAttacked = true;
-                state = State.Chasing;
+
+                Invoke(nameof(ResetAttack), attackCooldown);  // Reset attack state after cooldown
             }
         }
-    } 
+        else
+        {
+            // Stay in attack state until cooldown expires
+            remainingAttackCooldown -= Time.deltaTime;
+        }
+    }
 
     protected void GoBackToStart()
     {
-        //go back to starting position
+        //go back to startinxg position
         agent.SetDestination(startingPosition);
-        
+        agent.stoppingDistance = 0f;
         if (Vector3.Distance(transform.position, startingPosition) < reachedPositionDistance)
-        {
+        {   
             state = State.Patrolling; // if returned to start, patrol
         }
         //possibly redudant
@@ -166,7 +174,7 @@ public class Enemy : MonoBehaviour
         float randomX = Random.Range(-randomMoveDistance, randomMoveDistance);
         float randomZ = Random.Range(-randomMoveDistance, randomMoveDistance);
 
-        Vector3 movePointPosition = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        movePointPosition = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
         if(Physics.Raycast(movePointPosition, -transform.up, 2f, whatIsGround))
         {
@@ -174,8 +182,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    protected void ResetAttackCoolDown()
+    protected void ResetAttack()
     {
-        attackCooldown = Mathf.Min(0, attackCooldown - Time.deltaTime);
+        hasAttacked = false;
+        state = State.Chasing;  // Only switch to chasing AFTER attack cooldown
     }
 }
